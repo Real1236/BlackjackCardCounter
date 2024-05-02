@@ -1,9 +1,21 @@
-<mxfile host="app.diagrams.net" modified="2024-05-02T17:43:58.172Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0" version="24.3.1" etag="vKHN7KFLk6iEtwTPqQNR" type="github">
+<mxfile host="app.diagrams.net" modified="2024-05-02T19:12:15.772Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0" etag="Xs-Z4YkFBfsvcsrZmVYf" version="24.3.1" type="github">
   <diagram name="Page-1" id="Wv6jcYJhP_XWqhZyQ2fE">
-    <mxGraphModel>
+    <mxGraphModel dx="740" dy="431" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="L6OOuxj9K7HmiUU0QOWk-2" value="&lt;ul&gt;&lt;li&gt;Input cards that passed to keep track of deck composition&lt;/li&gt;&lt;li&gt;Use custom card counting Excel to receive playing strategy&lt;/li&gt;&lt;li&gt;Use some hardcoded betting strategy to receive bet sizes&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;Frontend&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;Keep track of cards that passed, keeps state of deck composition&lt;/li&gt;&lt;li&gt;Keeps state of money&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;Backend&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;Receives deck composition and bankroll from frontend, sends back playing strategy and bet size&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;html=1;whiteSpace=wrap;verticalAlign=top;overflow=hidden;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="600" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="L6OOuxj9K7HmiUU0QOWk-3" value="Blackjack Card Counter High-Level Requirements" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="L6OOuxj9K7HmiUU0QOWk-4" value="&lt;div&gt;Strategy - /api/strategy&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;POST&amp;nbsp;&lt;/li&gt;&lt;li&gt;Description: get playing strategy and bet size&lt;/li&gt;&lt;li&gt;Input: deck composition, hit/stand soft17, bankroll, minimum bet size&lt;br&gt;&lt;/li&gt;&lt;li&gt;Output: playing strategy charts and bet size&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;html=1;whiteSpace=wrap;verticalAlign=top;overflow=hidden;" vertex="1" parent="1">
+          <mxGeometry x="40" y="370" width="600" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="L6OOuxj9K7HmiUU0QOWk-5" value="APIs" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="330" width="600" height="40" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
