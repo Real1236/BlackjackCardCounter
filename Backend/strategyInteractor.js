@@ -1,5 +1,12 @@
-const ExcelJS = require('exceljs');
+const XLSX = require('xlsx');
+const XLSX_CALC = require('xlsx-calc');
 const fs = require('fs');
+
+// Convert indices to Excel-style cell address for 1-based indexing
+function getCellAddress(row, col) {
+    const colLetter = String.fromCharCode(64 + col); // 64 is the ASCII value for 'A' - 1
+    return colLetter + row;
+}
 
 exports.createStrategyInteractor = async ({deckComposition, standsOnSoft17, bankroll, minBetSize}) => {
     // Map card value to cell
@@ -17,48 +24,27 @@ exports.createStrategyInteractor = async ({deckComposition, standsOnSoft17, bank
     };
 
     // Update deck composition and store result in a new file
-    const workbook = new ExcelJS.Workbook();
-    const randomId = Math.floor(Math.random() * 1000000);
-    await workbook.xlsx.readFile('./Excel/HitsSoft17_CCC.xlsx').then(async () => {
-        // Get Deck worksheet
-        const deckWorksheet = workbook.getWorksheet('Deck');
-
-        Object.entries(deckComposition).forEach(([card, count]) => {
-            deckWorksheet.getCell(cardValueToCell[card]).value = count;
-        });
-       
-        // Save workbook
-        console.log('randomId: ' + randomId);
-        await workbook.xlsx.writeFile('./Excel/HitsSoft17_CCC_' + randomId + '.xlsx').then(() => {
-            console.log('Strategy updated');
-        });
+    const workbook = XLSX.readFile('./Excel/HitsSoft17_CCC.xlsx');
+    Object.entries(deckComposition).forEach(([card, count]) => {
+        workbook.Sheets['Deck'][cardValueToCell[card]].v = count;
     });
+    XLSX_CALC(workbook);
 
-    // Get strategy from the new file
-    const newWorkbook = new ExcelJS.Workbook();
-    console.log('randomId: ' + randomId);
-    newWorkbook.xlsx.readFile('./Excel/HitsSoft17_CCC_' + randomId + '.xlsx').then(() => {
-        // Get Hard
-        const hardWorksheet = newWorkbook.getWorksheet('Hard');
-        const hardTable = {};
-        let startRow = 2;
-        let startCol = 2;
-        let endRow = 19;
-        let endCol = 11;
-        for (let i = startRow; i <= endRow; i++) {
-            for (let j = startCol; j <= endCol; j++) {
-                const cell = hardWorksheet.getCell(i, j);
-                hardTable[`${i + 2},${j}`] = cell.value.result;
-            }
+    // Get Hard
+    const hardWorksheet = workbook.Sheets['Hard'];
+    const hardTable = {};
+    
+    // All these values are 1-based index
+    let startRow = 2;
+    let startCol = 2;
+    let endRow = 19;
+    let endCol = 11;
+    for (let i = startRow; i <= endRow; i++) {
+        for (let j = startCol; j <= endCol; j++) {
+            const cell = hardWorksheet[getCellAddress(i, j)];
+            hardTable[`${i + 2},${j}`] = cell.v;
         }
+    }
 
-        console.log(hardTable);
-
-        // Get Soft
-        const softWorksheet = newWorkbook.getWorksheet('Soft');
-        const softTable = {};
-
-        // Delete the file
-        // fs.unlinkSync('./Excel/HitsSoft17_CCC_' + randomId + '.xlsx');
-    });
+    console.log(hardTable);
 }
