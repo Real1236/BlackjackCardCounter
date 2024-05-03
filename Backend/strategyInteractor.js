@@ -8,7 +8,7 @@ function getCellAddress(row, col) {
     return colLetter + row;
 }
 
-exports.createStrategyInteractor = async ({deckComposition, standsOnSoft17, bankroll, minBetSize}) => {
+exports.createStrategyInteractor = ({deckComposition, standsOnSoft17, bankroll, minBetSize}) => {
     // Map card value to cell
     const cardValueToCell = {
         'A': 'B2',
@@ -46,5 +46,41 @@ exports.createStrategyInteractor = async ({deckComposition, standsOnSoft17, bank
         }
     }
 
+    // Get Soft
+    const softWorksheet = workbook.Sheets['Soft'];
+    const softTable = {};
+    startRow = 2;
+    startCol = 2;
+    endRow = 11;
+    endCol = 11;
+    for (let i = startRow; i <= endRow; i++) {
+        for (let j = startCol; j <= endCol; j++) {
+            const cell = softWorksheet[getCellAddress(i, j)];
+            softTable[`${i + 10},${j}`] = cell.v;
+        }
+    }
+
+    // Get Split
+    const splitWorksheet = workbook.Sheets['Split'];
+    const splitTable = {};
+    startRow = 2;
+    startCol = 2;
+    endRow = 11;
+    endCol = 11;
+    for (let i = startRow; i <= endRow; i++) {
+        for (let j = startCol; j <= endCol; j++) {
+            const cell = splitWorksheet[getCellAddress(i, j)];
+            splitTable[`${i},${j}`] = cell.v;
+        }
+    }
+
     console.log(hardTable);
+    console.log(softTable);
+    console.log(splitTable);
+
+    return {
+        "hardTable": hardTable,
+        "softTable": softTable,
+        "splitTable": splitTable
+    }
 }
