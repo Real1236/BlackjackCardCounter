@@ -23,7 +23,12 @@ exports.createStrategyInteractor = ({deckComposition, standsOnSoft17, bankroll, 
         '10': 'K2'
     };
 
-    const workbook = XLSX.readFile('./Excel/HitsSoft17_CCC.xlsx');
+    let workbook;
+    if (standsOnSoft17 === false) {
+        workbook = XLSX.readFile('./Excel/HitsSoft17_CCC.xlsx');
+    } else {
+        workbook = XLSX.readFile('./Excel/StandsSoft17_CCC.xlsx');
+    }
     Object.entries(deckComposition).forEach(([card, count]) => {
         workbook.Sheets['Deck'][cardValueToCell[card]].v = count;
     });
@@ -79,6 +84,7 @@ exports.createStrategyInteractor = ({deckComposition, standsOnSoft17, bankroll, 
     const betMultiple = 1000 * playerEdge + 1;
     const betSize = betMultiple * minBetSize;
     const betSizeRounded = Math.max(Math.floor(betSize / 5) * 5, minBetSize);    // TODO: Make rounding increments dynamic
+    // TODO: have some bankroll management strategy here
 
     return {
         "betSize": betSizeRounded,
