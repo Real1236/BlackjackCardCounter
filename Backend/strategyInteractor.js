@@ -81,9 +81,9 @@ exports.createStrategyInteractor = ({deckComposition, standsOnSoft17, bankroll, 
     const betSizeRounded = Math.max(Math.floor(betSize / 5) * 5, minBetSize);    // TODO: Make rounding increments dynamic
 
     return {
+        "betSize": betSizeRounded,
         "hardTable": hardTable,
         "softTable": softTable,
-        "splitTable": splitTable,
-        "betSize": betSizeRounded
+        "splitTable": splitTable
     }
 }
