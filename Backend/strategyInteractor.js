@@ -9,7 +9,7 @@ function getCellAddress(row, col) {
 }
 
 exports.createStrategyInteractor = ({deckComposition, standsOnSoft17, bankroll, minBetSize}) => {
-    // Map card value to cell
+    /* Update deck composition */ 
     const cardValueToCell = {
         'A': 'B2',
         '2': 'C2',
@@ -23,13 +23,13 @@ exports.createStrategyInteractor = ({deckComposition, standsOnSoft17, bankroll, 
         '10': 'K2'
     };
 
-    // Update deck composition and store result in a new file
     const workbook = XLSX.readFile('./Excel/HitsSoft17_CCC.xlsx');
     Object.entries(deckComposition).forEach(([card, count]) => {
         workbook.Sheets['Deck'][cardValueToCell[card]].v = count;
     });
     XLSX_CALC(workbook);
 
+    /* Get strategy tables */
     // Get Hard
     const hardWorksheet = workbook.Sheets['Hard'];
     const hardTable = {};
@@ -74,13 +74,16 @@ exports.createStrategyInteractor = ({deckComposition, standsOnSoft17, bankroll, 
         }
     }
 
-    console.log(hardTable);
-    console.log(softTable);
-    console.log(splitTable);
+    /* Get bet size */
+    const playerEdge = workbook.Sheets['ev'][getCellAddress(45, 2)].v;
+    const betMultiple = 1000 * playerEdge + 1;
+    const betSize = betMultiple * minBetSize;
+    const betSizeRounded = Math.max(Math.floor(betSize / 5) * 5, minBetSize);    // TODO: Make rounding increments dynamic
 
     return {
         "hardTable": hardTable,
         "softTable": softTable,
-        "splitTable": splitTable
+        "splitTable": splitTable,
+        "betSize": betSizeRounded
     }
 }
