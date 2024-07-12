@@ -31,7 +31,7 @@ function Settings({
           <input
             type="number"
             value={minBetSize}
-            onChange={(e) => setMinBetSize(e.target.value)}
+            onChange={(e) => setMinBetSize(Number(e.target.value))}
           />
         </label>
       </form>
