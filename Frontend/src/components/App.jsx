@@ -21,6 +21,12 @@ function App() {
   const [nineCount, setNineCount] = useState(4);
   const [tenCount, setTenCount] = useState(16);
 
+  // Strategy tables state
+  const [hardTable, setHardTable] = useState({});
+  const [softTable, setSoftTable] = useState({});
+  const [splitTable, setSplitTable] = useState({});
+
+  // On mount, add event listener to decrement card count when key is pressed
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "1") {
@@ -63,6 +69,60 @@ function App() {
     };
   }, []);
 
+  // When any card count changes, get strategy tables from the server
+  useEffect(() => {
+    async function fetchStrategy() {
+      const requestOptions = {
+        method: "POST", // Specify the method
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          deckComposition: {
+            A: aceCount,
+            2: twoCount,
+            3: threeCount,
+            4: fourCount,
+            5: fiveCount,
+            6: sixCount,
+            7: sevenCount,
+            8: eightCount,
+            9: nineCount,
+            10: tenCount,
+          },
+          standsOnSoft17: true,
+          bankroll: 10000, // TODO: Implement bankroll
+          minBetSize: 10, // TODO: Implement minBetSize
+        }),
+      };
+
+      const res = await fetch(
+        "http://localhost:3000/api/strategy",
+        requestOptions
+      );
+
+      if (!res.ok)
+        throw new Error(
+          `Failed to fetch strategy: ${res.status} ${res.statusText}`
+        );
+
+      const data = await res.json();
+      setHardTable(data.hardTable);
+      setSoftTable(data.softTable);
+      setSplitTable(data.splitTable);
+    }
+    fetchStrategy();
+  }, [
+    aceCount,
+    twoCount,
+    threeCount,
+    fourCount,
+    fiveCount,
+    sixCount,
+    sevenCount,
+    eightCount,
+    nineCount,
+    tenCount,
+  ]);
+
   return (
     <div>
       <h1>Blackjack Card Counter</h1>
@@ -85,7 +145,11 @@ function App() {
       <Card value="9" count={nineCount} setCount={setNineCount} />
       <Card value="10" count={tenCount} setCount={setTenCount} />
 
-      <StrategyTables />
+      <StrategyTables
+        hardTable={hardTable}
+        softTable={softTable}
+        splitTable={splitTable}
+      />
     </div>
   );
 }
