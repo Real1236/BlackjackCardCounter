@@ -3,6 +3,7 @@ import "./App.css";
 import Settings from "./Settings";
 import Card from "./Card";
 import StrategyTables from "./StrategyTables";
+import BetSize from "./BetSize";
 
 function App() {
   // Settings state
@@ -25,6 +26,9 @@ function App() {
   const [hardTable, setHardTable] = useState({});
   const [softTable, setSoftTable] = useState({});
   const [splitTable, setSplitTable] = useState({});
+
+  // Bet size state
+  const [betSize, setBetSize] = useState(0);
 
   // On mount, add event listener to decrement card count when key is pressed
   useEffect(() => {
@@ -108,6 +112,7 @@ function App() {
       setHardTable(data.hardTable);
       setSoftTable(data.softTable);
       setSplitTable(data.splitTable);
+      setBetSize(data.betSize);
     }
     fetchStrategy();
   }, [
@@ -150,6 +155,8 @@ function App() {
         softTable={softTable}
         splitTable={splitTable}
       />
+
+      <BetSize betSize={betSize} />
     </div>
   );
 }
