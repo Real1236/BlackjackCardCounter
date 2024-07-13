@@ -183,27 +183,257 @@ const hardTableData = {
   "21,11": "S",
 };
 
+const softTableData = {
+  "12,2": "H",
+  "12,3": "H",
+  "12,4": "H",
+  "12,5": "H",
+  "12,6": "H",
+  "12,7": "H",
+  "12,8": "H",
+  "12,9": "H",
+  "12,10": "H",
+  "12,11": "H",
+  "13,2": "H",
+  "13,3": "H",
+  "13,4": "H",
+  "13,5": "H",
+  "13,6": "D",
+  "13,7": "H",
+  "13,8": "H",
+  "13,9": "H",
+  "13,10": "H",
+  "13,11": "H",
+  "14,2": "H",
+  "14,3": "H",
+  "14,4": "H",
+  "14,5": "D",
+  "14,6": "D",
+  "14,7": "H",
+  "14,8": "H",
+  "14,9": "H",
+  "14,10": "H",
+  "14,11": "H",
+  "15,2": "H",
+  "15,3": "H",
+  "15,4": "H",
+  "15,5": "D",
+  "15,6": "D",
+  "15,7": "H",
+  "15,8": "H",
+  "15,9": "H",
+  "15,10": "H",
+  "15,11": "H",
+  "16,2": "H",
+  "16,3": "H",
+  "16,4": "D",
+  "16,5": "D",
+  "16,6": "D",
+  "16,7": "H",
+  "16,8": "H",
+  "16,9": "H",
+  "16,10": "H",
+  "16,11": "H",
+  "17,2": "H",
+  "17,3": "D",
+  "17,4": "D",
+  "17,5": "D",
+  "17,6": "D",
+  "17,7": "H",
+  "17,8": "H",
+  "17,9": "H",
+  "17,10": "H",
+  "17,11": "H",
+  "18,2": "S",
+  "18,3": "D",
+  "18,4": "D",
+  "18,5": "D",
+  "18,6": "D",
+  "18,7": "S",
+  "18,8": "S",
+  "18,9": "H",
+  "18,10": "H",
+  "18,11": "H",
+  "19,2": "S",
+  "19,3": "S",
+  "19,4": "S",
+  "19,5": "S",
+  "19,6": "S",
+  "19,7": "S",
+  "19,8": "S",
+  "19,9": "S",
+  "19,10": "S",
+  "19,11": "S",
+  "20,2": "S",
+  "20,3": "S",
+  "20,4": "S",
+  "20,5": "S",
+  "20,6": "S",
+  "20,7": "S",
+  "20,8": "S",
+  "20,9": "S",
+  "20,10": "S",
+  "20,11": "S",
+  "21,2": "S",
+  "21,3": "S",
+  "21,4": "S",
+  "21,5": "S",
+  "21,6": "S",
+  "21,7": "S",
+  "21,8": "S",
+  "21,9": "S",
+  "21,10": "S",
+  "21,11": "S",
+};
+
+const splitTableData = {
+  "2,2": "Y",
+  "2,3": "Y",
+  "2,4": "Y",
+  "2,5": "Y",
+  "2,6": "Y",
+  "2,7": "Y",
+  "2,8": "N",
+  "2,9": "N",
+  "2,10": "N",
+  "2,11": "N",
+  "3,2": "Y",
+  "3,3": "Y",
+  "3,4": "Y",
+  "3,5": "Y",
+  "3,6": "Y",
+  "3,7": "Y",
+  "3,8": "N",
+  "3,9": "N",
+  "3,10": "N",
+  "3,11": "N",
+  "4,2": "N",
+  "4,3": "N",
+  "4,4": "N",
+  "4,5": "Y",
+  "4,6": "Y",
+  "4,7": "N",
+  "4,8": "N",
+  "4,9": "N",
+  "4,10": "N",
+  "4,11": "N",
+  "5,2": "N",
+  "5,3": "N",
+  "5,4": "N",
+  "5,5": "N",
+  "5,6": "N",
+  "5,7": "N",
+  "5,8": "N",
+  "5,9": "N",
+  "5,10": "N",
+  "5,11": "N",
+  "6,2": "Y",
+  "6,3": "Y",
+  "6,4": "Y",
+  "6,5": "Y",
+  "6,6": "Y",
+  "6,7": "N",
+  "6,8": "N",
+  "6,9": "N",
+  "6,10": "N",
+  "6,11": "N",
+  "7,2": "Y",
+  "7,3": "Y",
+  "7,4": "Y",
+  "7,5": "Y",
+  "7,6": "Y",
+  "7,7": "Y",
+  "7,8": "N",
+  "7,9": "N",
+  "7,10": "N",
+  "7,11": "N",
+  "8,2": "Y",
+  "8,3": "Y",
+  "8,4": "Y",
+  "8,5": "Y",
+  "8,6": "Y",
+  "8,7": "Y",
+  "8,8": "Y",
+  "8,9": "Y",
+  "8,10": "Y",
+  "8,11": "Y",
+  "9,2": "Y",
+  "9,3": "Y",
+  "9,4": "Y",
+  "9,5": "Y",
+  "9,6": "Y",
+  "9,7": "N",
+  "9,8": "Y",
+  "9,9": "Y",
+  "9,10": "N",
+  "9,11": "N",
+  "10,2": "N",
+  "10,3": "N",
+  "10,4": "N",
+  "10,5": "N",
+  "10,6": "N",
+  "10,7": "N",
+  "10,8": "N",
+  "10,9": "N",
+  "10,10": "N",
+  "10,11": "N",
+  "11,2": "Y",
+  "11,3": "Y",
+  "11,4": "Y",
+  "11,5": "Y",
+  "11,6": "Y",
+  "11,7": "Y",
+  "11,8": "Y",
+  "11,9": "Y",
+  "11,10": "Y",
+  "11,11": "Y",
+};
+
 function StrategyTables() {
   const [hardTable] = useState(hardTableData);
+  const [softTable] = useState(softTableData);
+  const [splitTable] = useState(splitTableData);
 
-  const rows = [];
-  const dealerUpcards = new Set();
-
-  // Get all unique dealer upcards and sort them
-  Object.keys(hardTable).forEach((key) => {
-    const [, dealerUpcard] = key.split(",");
-    dealerUpcards.add(parseInt(dealerUpcard, 10));
-  });
-  const sortedDealerUpcards = Array.from(dealerUpcards).sort((a, b) => a - b);
-
-  // Create rows for each player total from 4 to 21
+  // Create rows for hard and soft tables
+  const dealerUpcards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const hardRows = [];
   for (let playerTotal = 4; playerTotal <= 21; playerTotal++) {
-    const cells = sortedDealerUpcards.map((dealerUpcard) => {
+    const cells = dealerUpcards.map((dealerUpcard) => {
       const key = `${playerTotal},${dealerUpcard}`;
       return <td key={key}>{hardTable[key] || "-"}</td>;
     });
 
-    rows.push(
+    hardRows.push(
+      <tr key={playerTotal}>
+        <td>{playerTotal}</td>
+        {cells}
+      </tr>
+    );
+  }
+
+  const softRows = [];
+  for (let playerTotal = 12; playerTotal <= 21; playerTotal++) {
+    const cells = dealerUpcards.map((dealerUpcard) => {
+      const key = `${playerTotal},${dealerUpcard}`;
+      return <td key={key}>{softTable[key] || "-"}</td>;
+    });
+
+    softRows.push(
+      <tr key={playerTotal}>
+        <td>{playerTotal}</td>
+        {cells}
+      </tr>
+    );
+  }
+
+  const splitRows = [];
+  for (let playerTotal = 2; playerTotal <= 11; playerTotal++) {
+    const cells = dealerUpcards.map((dealerUpcard) => {
+      const key = `${playerTotal},${dealerUpcard}`;
+      return <td key={key}>{splitTable[key] || "-"}</td>;
+    });
+
+    splitRows.push(
       <tr key={playerTotal}>
         <td>{playerTotal}</td>
         {cells}
@@ -212,17 +442,46 @@ function StrategyTables() {
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Player Total / Dealer Upcard</th>
-          {sortedDealerUpcards.map((dealerUpcard) => (
-            <th key={dealerUpcard}>{dealerUpcard}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <>
+      <h2>Hard Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            {dealerUpcards.map((dealerUpcard) => (
+              <th key={dealerUpcard}>{dealerUpcard}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{hardRows}</tbody>
+      </table>
+
+      <h2>Soft Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            {dealerUpcards.map((dealerUpcard) => (
+              <th key={dealerUpcard}>{dealerUpcard}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{softRows}</tbody>
+      </table>
+
+      <h2>Split Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            {dealerUpcards.map((dealerUpcard) => (
+              <th key={dealerUpcard}>{dealerUpcard}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{splitRows}</tbody>
+      </table>
+    </>
   );
 }
 
