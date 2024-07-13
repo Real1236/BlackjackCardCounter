@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Settings from "./Settings";
 import Card from "./Card";
+import StrategyTables from "./StrategyTables";
 
 function App() {
   // Settings state
@@ -22,43 +23,43 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === '1') {
+      if (event.key === "1") {
         setAceCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '2') {
+      if (event.key === "2") {
         setTwoCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '3') {
+      if (event.key === "3") {
         setThreeCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '4') {
+      if (event.key === "4") {
         setFourCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '5') {
+      if (event.key === "5") {
         setFiveCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '6') {
+      if (event.key === "6") {
         setSixCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '7') {
+      if (event.key === "7") {
         setSevenCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '8') {
+      if (event.key === "8") {
         setEightCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '9') {
+      if (event.key === "9") {
         setNineCount((prevCount) => prevCount - 1);
       }
-      if (event.key === '0') {
+      if (event.key === "0") {
         setTenCount((prevCount) => prevCount - 1);
-      };
+      }
     };
-    
-    window.addEventListener('keydown', handleKeyDown);
-  
+
+    window.addEventListener("keydown", handleKeyDown);
+
     // Cleanup function to remove the event listener when the component unmounts
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -83,6 +84,8 @@ function App() {
       <Card value="8" count={eightCount} setCount={setEightCount} />
       <Card value="9" count={nineCount} setCount={setNineCount} />
       <Card value="10" count={tenCount} setCount={setTenCount} />
+
+      <StrategyTables />
     </div>
   );
 }
