@@ -99,7 +99,7 @@ function App() {
       };
 
       const res = await fetch(
-        "http://localhost:8080/api/strategy",
+        `${import.meta.env.VITE_BASE_URL}/api/strategy`,
         requestOptions
       );
 
