@@ -126,6 +126,7 @@ function App() {
     eightCount,
     nineCount,
     tenCount,
+    minBetSize,
   ]);
 
   return (
