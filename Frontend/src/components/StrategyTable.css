@@ -8,3 +8,15 @@
   box-sizing: border-box;
   padding: 5px;
 }
+
+.hit {
+  background-color: darkslategrey;
+}
+
+.stand {
+  background-color: darkred;
+}
+
+.double {
+  background-color: darkgreen;
+}

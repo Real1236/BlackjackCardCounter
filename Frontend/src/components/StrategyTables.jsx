@@ -14,7 +14,22 @@ function StrategyTable({ hardTable, softTable, splitTable }) {
   for (let playerTotal = 4; playerTotal <= 21; playerTotal++) {
     const cells = dealerUpcards.map((dealerUpcard) => {
       const key = `${playerTotal},${dealerUpcard}`;
-      return <td key={key}>{hardTable[key] || "-"}</td>;
+      return (
+        <td
+          key={key}
+          className={
+            hardTable[key] === "H"
+              ? "hit"
+              : hardTable[key] === "S" || hardTable[key] === "R"
+              ? "stand"
+              : hardTable[key] === "D"
+              ? "double"
+              : ""
+          }
+        >
+          {hardTable[key] || "-"}
+        </td>
+      );
     });
 
     hardRows.push(
@@ -29,7 +44,22 @@ function StrategyTable({ hardTable, softTable, splitTable }) {
   for (let playerTotal = 12; playerTotal <= 21; playerTotal++) {
     const cells = dealerUpcards.map((dealerUpcard) => {
       const key = `${playerTotal},${dealerUpcard}`;
-      return <td key={key}>{softTable[key] || "-"}</td>;
+      return (
+        <td
+          key={key}
+          className={
+            softTable[key] === "H"
+              ? "hit"
+              : softTable[key] === "S" || softTable[key] === "R"
+              ? "stand"
+              : softTable[key] === "D"
+              ? "double"
+              : ""
+          }
+        >
+          {softTable[key] || "-"}
+        </td>
+      );
     });
 
     softRows.push(
@@ -44,7 +74,20 @@ function StrategyTable({ hardTable, softTable, splitTable }) {
   for (let playerTotal = 2; playerTotal <= 11; playerTotal++) {
     const cells = dealerUpcards.map((dealerUpcard) => {
       const key = `${playerTotal},${dealerUpcard}`;
-      return <td key={key}>{splitTable[key] || "-"}</td>;
+      return (
+        <td
+          key={key}
+          className={
+            splitTable[key] === "Y"
+              ? "hit"
+              : splitTable[key] === "N"
+              ? "stand"
+              : ""
+          }
+        >
+          {splitTable[key] || "-"}
+        </td>
+      );
     });
 
     splitRows.push(
