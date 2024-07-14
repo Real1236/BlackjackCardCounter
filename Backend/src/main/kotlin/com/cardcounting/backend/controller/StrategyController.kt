@@ -12,8 +12,18 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/strategy")
 class StrategyController(private val strategyService: StrategyService) {
     @PostMapping
-    fun getStrategy(@RequestBody request: StrategyRequest): StrategyResponse? {
+    fun getStrategy(@RequestBody request: StrategyRequest): StrategyResponse {
         return strategyService.getStrategy(
+            request.deckComposition,
+            request.standsOnSoft17,
+            request.bankroll,
+            request.minBetSize
+        )
+    }
+
+    @PostMapping("/test")
+    fun getEV(@RequestBody request: StrategyRequest): Double {
+        return strategyService.getEV(
             request.deckComposition,
             request.standsOnSoft17,
             request.bankroll,
