@@ -1,0 +1,10 @@
+.strategy-tables {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.strategy-tables table {
+  flex: 0 0 33%;
+  box-sizing: border-box;
+  padding: 5px;
+}

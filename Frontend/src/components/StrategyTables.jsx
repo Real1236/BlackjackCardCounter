@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
+import "./StrategyTable.css";
 
-StrategyTables.propTypes = {
+StrategyTable.propTypes = {
   hardTable: PropTypes.object.isRequired,
   softTable: PropTypes.object.isRequired,
   splitTable: PropTypes.object.isRequired,
 };
 
-function StrategyTables({ hardTable, softTable, splitTable }) {
+function StrategyTable({ hardTable, softTable, splitTable }) {
   // Create rows for tables
   const dealerUpcards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   const hardRows = [];
@@ -55,47 +56,53 @@ function StrategyTables({ hardTable, softTable, splitTable }) {
   }
 
   return (
-    <>
-      <h2>Hard Table</h2>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            {dealerUpcards.map((dealerUpcard) => (
-              <th key={dealerUpcard}>{dealerUpcard}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>{hardRows}</tbody>
-      </table>
+    <div className="strategy-tables">
+      <div className="table">
+        <h2>Hard Table</h2>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              {dealerUpcards.map((dealerUpcard) => (
+                <th key={dealerUpcard}>{dealerUpcard}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>{hardRows}</tbody>
+        </table>
+      </div>
 
-      <h2>Soft Table</h2>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            {dealerUpcards.map((dealerUpcard) => (
-              <th key={dealerUpcard}>{dealerUpcard}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>{softRows}</tbody>
-      </table>
+      <div className="table">
+        <h2>Soft Table</h2>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              {dealerUpcards.map((dealerUpcard) => (
+                <th key={dealerUpcard}>{dealerUpcard}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>{softRows}</tbody>
+        </table>
+      </div>
 
-      <h2>Split Table</h2>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            {dealerUpcards.map((dealerUpcard) => (
-              <th key={dealerUpcard}>{dealerUpcard}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>{splitRows}</tbody>
-      </table>
-    </>
+      <div className="table">
+        <h2>Split Table</h2>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              {dealerUpcards.map((dealerUpcard) => (
+                <th key={dealerUpcard}>{dealerUpcard}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>{splitRows}</tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
-export default StrategyTables;
+export default StrategyTable;
