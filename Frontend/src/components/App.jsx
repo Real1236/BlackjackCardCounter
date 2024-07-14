@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Settings from "./Settings";
-import Card from "./Card";
+import DeckComposition from "./DeckComposition";
 import StrategyTables from "./StrategyTables";
 import BetSize from "./BetSize";
 
@@ -139,17 +139,28 @@ function App() {
         setMinBetSize={setMinBetSize}
       />
 
-      <h2>Deck composition</h2>
-      <Card value="Ace" count={aceCount} setCount={setAceCount} />
-      <Card value="2" count={twoCount} setCount={setTwoCount} />
-      <Card value="3" count={threeCount} setCount={setThreeCount} />
-      <Card value="4" count={fourCount} setCount={setFourCount} />
-      <Card value="5" count={fiveCount} setCount={setFiveCount} />
-      <Card value="6" count={sixCount} setCount={setSixCount} />
-      <Card value="7" count={sevenCount} setCount={setSevenCount} />
-      <Card value="8" count={eightCount} setCount={setEightCount} />
-      <Card value="9" count={nineCount} setCount={setNineCount} />
-      <Card value="10" count={tenCount} setCount={setTenCount} />
+      <DeckComposition
+        aceCount={aceCount}
+        twoCount={twoCount}
+        threeCount={threeCount}
+        fourCount={fourCount}
+        fiveCount={fiveCount}
+        sixCount={sixCount}
+        sevenCount={sevenCount}
+        eightCount={eightCount}
+        nineCount={nineCount}
+        tenCount={tenCount}
+        setAceCount={setAceCount}
+        setTwoCount={setTwoCount}
+        setThreeCount={setThreeCount}
+        setFourCount={setFourCount}
+        setFiveCount={setFiveCount}
+        setSixCount={setSixCount}
+        setSevenCount={setSevenCount}
+        setEightCount={setEightCount}
+        setNineCount={setNineCount}
+        setTenCount={setTenCount}
+      />
 
       <StrategyTables
         hardTable={hardTable}
