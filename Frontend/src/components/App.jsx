@@ -99,7 +99,7 @@ function App() {
       };
 
       const res = await fetch(
-        "http://localhost:3000/api/strategy",
+        "http://localhost:8080/api/strategy",
         requestOptions
       );
 

@@ -83,7 +83,14 @@ class StrategyService {
             for (j in startCol..endCol) {
                 val cellAddress = CellAddress(i - 1, j - 1)
                 val cell = sheet.getRow(cellAddress.row).getCell(cellAddress.column)
-                table["$i,$j"] = cell.stringCellValue
+
+                val playerTotal = when(sheetName) {
+                    "Hard" -> i + 2
+                    "Soft" -> i + 10
+                    "Split" -> i
+                    else -> 0
+                }
+                table["$playerTotal,$j"] = cell.stringCellValue
             }
         }
         return table
