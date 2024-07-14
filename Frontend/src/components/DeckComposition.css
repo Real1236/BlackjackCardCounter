@@ -1,0 +1,14 @@
+.deck-composition {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.deck-composition label {
+  flex: 0 0 50%;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.deck-composition input {
+  width: 40px;
+}
