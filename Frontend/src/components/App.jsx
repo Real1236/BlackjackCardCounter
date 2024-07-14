@@ -94,7 +94,7 @@ function App() {
           },
           standsOnSoft17: true,
           bankroll: 10000, // TODO: Implement bankroll
-          minBetSize: 10, // TODO: Implement minBetSize
+          minBetSize: minBetSize,
         }),
       };
 
