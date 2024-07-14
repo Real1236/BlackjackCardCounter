@@ -7,7 +7,7 @@ BetSize.propTypes = {
 function BetSize({ betSize }) {
   return (
     <div>
-      <p>Bet Size: {betSize}</p>
+      <h2>Bet Size: {betSize}</h2>
     </div>
   );
 }

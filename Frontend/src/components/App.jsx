@@ -8,19 +8,19 @@ import BetSize from "./BetSize";
 function App() {
   // Settings state
   const [dealerStandsOn17, setDealerStandsOn17] = useState(true);
-  const [minBetSize, setMinBetSize] = useState(0);
+  const [minBetSize, setMinBetSize] = useState(5);
 
   // Deck composition state
-  const [aceCount, setAceCount] = useState(4);
-  const [twoCount, setTwoCount] = useState(4);
-  const [threeCount, setThreeCount] = useState(4);
-  const [fourCount, setFourCount] = useState(4);
-  const [fiveCount, setFiveCount] = useState(4);
-  const [sixCount, setSixCount] = useState(4);
-  const [sevenCount, setSevenCount] = useState(4);
-  const [eightCount, setEightCount] = useState(4);
-  const [nineCount, setNineCount] = useState(4);
-  const [tenCount, setTenCount] = useState(16);
+  const [aceCount, setAceCount] = useState(16);
+  const [twoCount, setTwoCount] = useState(16);
+  const [threeCount, setThreeCount] = useState(16);
+  const [fourCount, setFourCount] = useState(16);
+  const [fiveCount, setFiveCount] = useState(16);
+  const [sixCount, setSixCount] = useState(16);
+  const [sevenCount, setSevenCount] = useState(16);
+  const [eightCount, setEightCount] = useState(16);
+  const [nineCount, setNineCount] = useState(16);
+  const [tenCount, setTenCount] = useState(64);
 
   // Strategy tables state
   const [hardTable, setHardTable] = useState({});
