@@ -8,6 +8,7 @@ import org.apache.poi.ss.util.CellAddress
 import org.springframework.stereotype.Service
 
 import java.io.FileInputStream
+import java.io.InputStream
 import kotlin.reflect.full.memberProperties
 
 @Service
@@ -18,8 +19,8 @@ class StrategyService {
         bankroll: Int,
         minBetSize: Int
     ): StrategyResponse {
-        val filePath = getFilePath(standsOnSoft17)
-        val workbook = WorkbookFactory.create(FileInputStream(filePath))
+        val fileInputStream = getFileAsInputStream(standsOnSoft17)
+        val workbook = WorkbookFactory.create(fileInputStream)
         updateDeckComposition(workbook, deckComposition)
         workbook.creationHelper.createFormulaEvaluator().evaluateAll()
         val (hardTable, softTable, splitTable) = getStrategyTables(workbook)
@@ -39,17 +40,18 @@ class StrategyService {
         bankroll: Int,
         minBetSize: Int
     ): Double {
-        val filePath = getFilePath(standsOnSoft17)
-        val workbook = WorkbookFactory.create(FileInputStream(filePath))
+        val fileInputStream = getFileAsInputStream(standsOnSoft17)
+        val workbook = WorkbookFactory.create(fileInputStream)
         updateDeckComposition(workbook, deckComposition)
         workbook.creationHelper.createFormulaEvaluator().evaluateAll()
         return getEvFromExcel(workbook)
     }
 
-    private fun getFilePath(standsOnSoft17: Boolean): String {
-        var filePath = "src/main/resources/excel/"
-        filePath += if (standsOnSoft17) "StandsSoft17_CCC.xlsx" else "HitsSoft17_CCC.xlsx"
-        return filePath
+    private fun getFileAsInputStream(standsOnSoft17: Boolean): InputStream {
+        val resourcePath = if (standsOnSoft17) "/excel/StandsSoft17_CCC.xlsx" else "/excel/HitsSoft17_CCC.xlsx"
+        val inputStream = this::class.java.getResourceAsStream(resourcePath)
+            ?: throw IllegalArgumentException("Resource not found: $resourcePath")
+        return inputStream
     }
 
     private fun updateDeckComposition(
