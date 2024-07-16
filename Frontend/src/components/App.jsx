@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Settings from "./Settings";
 import DeckComposition from "./DeckComposition";
@@ -6,6 +6,9 @@ import StrategyTables from "./StrategyTables";
 import BetSize from "./BetSize";
 
 function App() {
+  // Controller for aborting fetch requests
+  const controller = useRef();
+
   // Settings state
   const [dealerStandsOn17, setDealerStandsOn17] = useState(true);
   const [minBetSize, setMinBetSize] = useState(5);
@@ -76,6 +79,12 @@ function App() {
   // When any card count changes, get strategy tables from the server
   useEffect(() => {
     async function fetchStrategy() {
+      // Abort previous fetch requests if they are still pending
+      if (controller.current) controller.current.abort();
+
+      controller.current = new AbortController();
+      const signal = controller.current.signal;
+
       const requestOptions = {
         method: "POST", // Specify the method
         headers: { "Content-Type": "application/json" },
@@ -96,23 +105,28 @@ function App() {
           bankroll: 10000, // TODO: Implement bankroll
           minBetSize: minBetSize,
         }),
+        signal,
       };
 
-      const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/strategy`,
-        requestOptions
-      );
-
-      if (!res.ok)
-        throw new Error(
-          `Failed to fetch strategy: ${res.status} ${res.statusText}`
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/strategy`,
+          requestOptions
         );
 
-      const data = await res.json();
-      setHardTable(data.hardTable);
-      setSoftTable(data.softTable);
-      setSplitTable(data.splitTable);
-      setBetSize(data.betSize);
+        if (!res.ok)
+          throw new Error(
+            `Failed to fetch strategy: ${res.status} ${res.statusText}`
+          );
+
+        const data = await res.json();
+        setHardTable(data.hardTable);
+        setSoftTable(data.softTable);
+        setSplitTable(data.splitTable);
+        setBetSize(data.betSize);
+      } catch (error) {
+        /* empty */
+      }
     }
     fetchStrategy();
   }, [
