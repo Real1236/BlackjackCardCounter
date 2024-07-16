@@ -11,7 +11,7 @@ class WebClientConfig : WebMvcConfigurer {
     fun corsConfigurer() = object : WebMvcConfigurer {
         override fun addCorsMappings(registry: CorsRegistry) {
             registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173")
+                .allowedOrigins("http://localhost:5173", "https://cardcounting-frontend-cptnh7gdra-nn.a.run.app/")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
