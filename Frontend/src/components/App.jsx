@@ -194,13 +194,13 @@ function App() {
             setTenCount={setTenCount}
           />
 
+          <BetSize betSize={betSize} />
+
           <StrategyTables
             hardTable={hardTable}
             softTable={softTable}
             splitTable={splitTable}
           />
-
-          <BetSize betSize={betSize} />
         </div>
 
         <div className="right-column">
