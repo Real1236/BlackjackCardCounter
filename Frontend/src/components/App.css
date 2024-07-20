@@ -37,6 +37,15 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-column {
+  flex: 70%;
+}
+
+.right-column {
+  flex: 30%;
 }

@@ -4,6 +4,7 @@ import Settings from "./Settings";
 import DeckComposition from "./DeckComposition";
 import StrategyTables from "./StrategyTables";
 import BetSize from "./BetSize";
+import CardTracker from "./CardTracker";
 
 function App() {
   // Controller for aborting fetch requests
@@ -33,9 +34,16 @@ function App() {
   // Bet size state
   const [betSize, setBetSize] = useState(0);
 
+  // Card tracker state
+  const [cardsDealt, setCardsDealt] = useState([]);
+
   // On mount, add event listener to decrement card count when key is pressed
   useEffect(() => {
     const handleKeyDown = (event) => {
+      // Ignore key presses that are not numbers
+      if (isNaN(Number(event.key))) return;
+
+      // Decrement card count based on key pressed
       if (event.key === "1") {
         setAceCount((prevCount) => prevCount - 1);
       }
@@ -65,6 +73,15 @@ function App() {
       }
       if (event.key === "0") {
         setTenCount((prevCount) => prevCount - 1);
+      }
+
+      // Add card to cardsDealt state
+      if (event.key === "1") {
+        setCardsDealt((prevCards) => ["A", ...prevCards]);
+      } else if (event.key === "0") {
+        setCardsDealt((prevCards) => ["10", ...prevCards]);
+      } else {
+        setCardsDealt((prevCards) => [event.key, ...prevCards]);
       }
     };
 
@@ -144,7 +161,7 @@ function App() {
   ]);
 
   return (
-    <div>
+    <>
       <h1>Blackjack Card Counter</h1>
       <Settings
         dealerStandsOn17={dealerStandsOn17}
@@ -152,38 +169,45 @@ function App() {
         minBetSize={minBetSize}
         setMinBetSize={setMinBetSize}
       />
+      <div className="flex-container">
+        <div className="left-column">
+          <DeckComposition
+            aceCount={aceCount}
+            twoCount={twoCount}
+            threeCount={threeCount}
+            fourCount={fourCount}
+            fiveCount={fiveCount}
+            sixCount={sixCount}
+            sevenCount={sevenCount}
+            eightCount={eightCount}
+            nineCount={nineCount}
+            tenCount={tenCount}
+            setAceCount={setAceCount}
+            setTwoCount={setTwoCount}
+            setThreeCount={setThreeCount}
+            setFourCount={setFourCount}
+            setFiveCount={setFiveCount}
+            setSixCount={setSixCount}
+            setSevenCount={setSevenCount}
+            setEightCount={setEightCount}
+            setNineCount={setNineCount}
+            setTenCount={setTenCount}
+          />
 
-      <DeckComposition
-        aceCount={aceCount}
-        twoCount={twoCount}
-        threeCount={threeCount}
-        fourCount={fourCount}
-        fiveCount={fiveCount}
-        sixCount={sixCount}
-        sevenCount={sevenCount}
-        eightCount={eightCount}
-        nineCount={nineCount}
-        tenCount={tenCount}
-        setAceCount={setAceCount}
-        setTwoCount={setTwoCount}
-        setThreeCount={setThreeCount}
-        setFourCount={setFourCount}
-        setFiveCount={setFiveCount}
-        setSixCount={setSixCount}
-        setSevenCount={setSevenCount}
-        setEightCount={setEightCount}
-        setNineCount={setNineCount}
-        setTenCount={setTenCount}
-      />
+          <StrategyTables
+            hardTable={hardTable}
+            softTable={softTable}
+            splitTable={splitTable}
+          />
 
-      <StrategyTables
-        hardTable={hardTable}
-        softTable={softTable}
-        splitTable={splitTable}
-      />
+          <BetSize betSize={betSize} />
+        </div>
 
-      <BetSize betSize={betSize} />
-    </div>
+        <div className="right-column">
+          <CardTracker cardsDealt={cardsDealt} />
+        </div>
+      </div>
+    </>
   );
 }
 
