@@ -18,9 +18,9 @@ function StrategyTable({ hardTable, softTable, splitTable }) {
         <td
           key={key}
           className={
-            hardTable[key] === "H"
+            hardTable[key] === "H" || hardTable[key] === "R"
               ? "hit"
-              : hardTable[key] === "S" || hardTable[key] === "R"
+              : hardTable[key] === "S"
               ? "stand"
               : hardTable[key] === "D"
               ? "double"
@@ -48,9 +48,9 @@ function StrategyTable({ hardTable, softTable, splitTable }) {
         <td
           key={key}
           className={
-            softTable[key] === "H"
+            softTable[key] === "H" || softTable[key] === "R"
               ? "hit"
-              : softTable[key] === "S" || softTable[key] === "R"
+              : softTable[key] === "S"
               ? "stand"
               : softTable[key] === "D"
               ? "double"
