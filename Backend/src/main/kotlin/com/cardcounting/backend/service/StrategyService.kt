@@ -103,7 +103,7 @@ class StrategyService {
         val playerEdge = evSheet.getRow(44).getCell(1).numericCellValue
         val betMultiple = 1000 * playerEdge + 1
         val betSize = betMultiple * minBetSize
-        val betSizeRounded = maxOf((betSize / 5).toInt() * 5, minBetSize)
+        val betSizeRounded = maxOf((betSize / minBetSize).toInt() * minBetSize, minBetSize)
         return betSizeRounded
     }
 
