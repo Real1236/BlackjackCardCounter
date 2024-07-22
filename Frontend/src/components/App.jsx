@@ -171,16 +171,6 @@ function App() {
             eightCount={eightCount}
             nineCount={nineCount}
             tenCount={tenCount}
-            setAceCount={setAceCount}
-            setTwoCount={setTwoCount}
-            setThreeCount={setThreeCount}
-            setFourCount={setFourCount}
-            setFiveCount={setFiveCount}
-            setSixCount={setSixCount}
-            setSevenCount={setSevenCount}
-            setEightCount={setEightCount}
-            setNineCount={setNineCount}
-            setTenCount={setTenCount}
           />
 
           <BetSize betSize={betSize} />
