@@ -43,9 +43,9 @@
 }
 
 .left-column {
-  flex: 70%;
+  flex: 90%;
 }
 
 .right-column {
-  flex: 30%;
+  flex: 10%;
 }
