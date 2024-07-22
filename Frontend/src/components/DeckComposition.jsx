@@ -28,7 +28,7 @@ function DeckComposition({ deckComposition }) {
         <br />
         <label>9: {deckComposition[9]}</label>
         <br />
-        <label>10: {deckComposition[0]}</label>
+        <label>10: {deckComposition[10]}</label>
       </div>
     </>
   );

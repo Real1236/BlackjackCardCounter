@@ -52,7 +52,7 @@ function App() {
       7: 4 * numDecks,
       8: 4 * numDecks,
       9: 4 * numDecks,
-      0: 16 * numDecks,
+      10: 16 * numDecks,
     });
     setCardsDealt([]);
   }, [numDecks]);
@@ -60,7 +60,7 @@ function App() {
   // Add event listener to decrement card count when key is pressed
   useEffect(() => {
     const handleKeyPress = (event) => {
-      let card = Number(event.key);
+      let card = Number(event.key) === 0 ? 10 : Number(event.key);
       if (!isNaN(card) && deckComposition[card] > 0) {
         // Update the deck composition by decrementing the count of the dealt card
         setDeckComposition((prevComposition) => ({
@@ -70,9 +70,7 @@ function App() {
 
         // Add the card to the dealt list
         setCardsDealt((prevCards) => {
-          if (card === 0) {
-            return [10, ...prevCards];
-          } else if (card === 1) {
+          if (card === 1) {
             return ["A", ...prevCards];
           }
           return [card, ...prevCards];
@@ -112,7 +110,7 @@ function App() {
             7: deckComposition[7],
             8: deckComposition[8],
             9: deckComposition[9],
-            10: deckComposition[0],
+            10: deckComposition[10],
           },
           standsOnSoft17: true,
           bankroll: 10000, // TODO: Implement bankroll
