@@ -37,51 +37,61 @@ function App() {
   // Card tracker state
   const [cardsDealt, setCardsDealt] = useState([]);
 
-  // On mount, add event listener to decrement card count when key is pressed
+  // Add event listener to decrement card count when key is pressed
   useEffect(() => {
     const handleKeyDown = (event) => {
       // Ignore key presses that are not numbers
       if (isNaN(Number(event.key))) return;
 
       // Decrement card count based on key pressed
-      if (event.key === "1") {
+      if (event.key === "1" && aceCount > 0) {
         setAceCount((prevCount) => prevCount - 1);
+        setCardsDealt((prevCards) => ["A", ...prevCards]);
       }
       if (event.key === "2") {
-        setTwoCount((prevCount) => prevCount - 1);
+        setTwoCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (twoCount === 0) return;
+        setCardsDealt((prevCards) => ["2", ...prevCards]);
       }
       if (event.key === "3") {
-        setThreeCount((prevCount) => prevCount - 1);
+        setThreeCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (threeCount === 0) return;
+        setCardsDealt((prevCards) => ["3", ...prevCards]);
       }
       if (event.key === "4") {
-        setFourCount((prevCount) => prevCount - 1);
+        setFourCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (fourCount === 0) return;
+        setCardsDealt((prevCards) => ["4", ...prevCards]);
       }
       if (event.key === "5") {
-        setFiveCount((prevCount) => prevCount - 1);
+        setFiveCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (fiveCount === 0) return;
+        setCardsDealt((prevCards) => ["5", ...prevCards]);
       }
       if (event.key === "6") {
-        setSixCount((prevCount) => prevCount - 1);
+        setSixCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (sixCount === 0) return;
+        setCardsDealt((prevCards) => ["6", ...prevCards]);
       }
       if (event.key === "7") {
-        setSevenCount((prevCount) => prevCount - 1);
+        setSevenCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (sevenCount === 0) return;
+        setCardsDealt((prevCards) => ["7", ...prevCards]);
       }
       if (event.key === "8") {
-        setEightCount((prevCount) => prevCount - 1);
+        setEightCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (eightCount === 0) return;
+        setCardsDealt((prevCards) => ["8", ...prevCards]);
       }
       if (event.key === "9") {
-        setNineCount((prevCount) => prevCount - 1);
+        setNineCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (nineCount === 0) return;
+        setCardsDealt((prevCards) => ["9", ...prevCards]);
       }
       if (event.key === "0") {
-        setTenCount((prevCount) => prevCount - 1);
-      }
-
-      // Add card to cardsDealt state
-      if (event.key === "1") {
-        setCardsDealt((prevCards) => ["A", ...prevCards]);
-      } else if (event.key === "0") {
+        setTenCount((prevCount) => Math.max(prevCount - 1, 0));
+        if (tenCount === 0) return;
         setCardsDealt((prevCards) => ["10", ...prevCards]);
-      } else {
-        setCardsDealt((prevCards) => [event.key, ...prevCards]);
       }
     };
 
@@ -91,7 +101,18 @@ function App() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [
+    aceCount,
+    eightCount,
+    fiveCount,
+    fourCount,
+    nineCount,
+    sevenCount,
+    sixCount,
+    tenCount,
+    threeCount,
+    twoCount,
+  ]);
 
   // When any card count changes, get strategy tables from the server
   useEffect(() => {
@@ -103,7 +124,7 @@ function App() {
       const signal = controller.current.signal;
 
       const requestOptions = {
-        method: "POST", // Specify the method
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           deckComposition: {
