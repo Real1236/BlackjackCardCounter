@@ -35,7 +35,7 @@ function Settings({
           <input
             type="number"
             value={minBetSize}
-            onChange={(e) => setMinBetSize(Number(e.target.value))}
+            onChange={(e) => setMinBetSize(Math.max(Number(e.target.value), 0))}
           />
         </label>
         <br />
@@ -44,7 +44,7 @@ function Settings({
           <input
             type="number"
             value={numDecks}
-            onChange={(e) => setNumDecks(Number(e.target.value))}
+            onChange={(e) => setNumDecks(Math.max(Number(e.target.value), 1))}
           />
         </label>
       </form>
