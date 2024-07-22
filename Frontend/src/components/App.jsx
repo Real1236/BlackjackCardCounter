@@ -39,6 +39,7 @@ function App() {
 
   // Card tracker state
   const [cardsDealt, setCardsDealt] = useState([]);
+  const [redoStack, setRedoStack] = useState([]);
 
   // Reset deck composition when the number of decks changes
   useEffect(() => {
@@ -141,6 +142,46 @@ function App() {
     }
     fetchStrategy();
   }, [deckComposition, minBetSize]);
+
+  // Example useEffect to add keydown listeners for undo/redo
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "-") {
+        if (cardsDealt.length > 0) {
+          let lastCardDealt = cardsDealt[0];
+          if (lastCardDealt === "A") {
+            lastCardDealt = 1;
+          }
+          setDeckComposition((prevComposition) => ({
+            ...prevComposition,
+            [lastCardDealt]: prevComposition[lastCardDealt] + 1,
+          }));
+          setRedoStack([...redoStack, lastCardDealt]);
+          setCardsDealt(cardsDealt.slice(1));
+        }
+      } else if (event.key === "+") {
+        if (redoStack.length > 0) {
+          let lastCardUndealt = redoStack[redoStack.length - 1];
+          setDeckComposition((prevComposition) => ({
+            ...prevComposition,
+            [lastCardUndealt]: prevComposition[lastCardUndealt] - 1,
+          }));
+          setRedoStack(redoStack.slice(0, redoStack.length - 1));
+          setCardsDealt(
+            lastCardUndealt === 1
+              ? ["A", ...cardsDealt]
+              : [lastCardUndealt, ...cardsDealt]
+          );
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [cardsDealt, redoStack]);
 
   return (
     <>
