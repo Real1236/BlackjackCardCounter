@@ -13,6 +13,7 @@ function App() {
   // Settings state
   const [dealerStandsOn17, setDealerStandsOn17] = useState(true);
   const [minBetSize, setMinBetSize] = useState(5);
+  const [numDecks, setNumDecks] = useState(8);
 
   // Deck composition state
   const [aceCount, setAceCount] = useState(16);
@@ -36,6 +37,21 @@ function App() {
 
   // Card tracker state
   const [cardsDealt, setCardsDealt] = useState([]);
+
+  // Reset deck composition when the number of decks changes
+  useEffect(() => {
+    setAceCount(4 * numDecks);
+    setTwoCount(4 * numDecks);
+    setThreeCount(4 * numDecks);
+    setFourCount(4 * numDecks);
+    setFiveCount(4 * numDecks);
+    setSixCount(4 * numDecks);
+    setSevenCount(4 * numDecks);
+    setEightCount(4 * numDecks);
+    setNineCount(4 * numDecks);
+    setTenCount(16 * numDecks);
+    setCardsDealt([]);
+  }, [numDecks]);
 
   // Add event listener to decrement card count when key is pressed
   useEffect(() => {
@@ -157,6 +173,8 @@ function App() {
         setDealerStandsOn17={setDealerStandsOn17}
         minBetSize={minBetSize}
         setMinBetSize={setMinBetSize}
+        numDecks={numDecks}
+        setNumDecks={setNumDecks}
       />
       <div className="flex-container">
         <div className="left-column">

@@ -5,6 +5,8 @@ Settings.propTypes = {
   setDealerStandsOn17: PropTypes.func.isRequired,
   minBetSize: PropTypes.number.isRequired,
   setMinBetSize: PropTypes.func.isRequired,
+  numDecks: PropTypes.number.isRequired,
+  setNumDecks: PropTypes.func.isRequired,
 };
 
 function Settings({
@@ -12,6 +14,8 @@ function Settings({
   setDealerStandsOn17,
   minBetSize,
   setMinBetSize,
+  numDecks,
+  setNumDecks,
 }) {
   return (
     <>
@@ -32,6 +36,15 @@ function Settings({
             type="number"
             value={minBetSize}
             onChange={(e) => setMinBetSize(Number(e.target.value))}
+          />
+        </label>
+        <br />
+        <label>
+          Number of decks:
+          <input
+            type="number"
+            value={numDecks}
+            onChange={(e) => setNumDecks(Number(e.target.value))}
           />
         </label>
       </form>
