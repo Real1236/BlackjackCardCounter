@@ -2,53 +2,33 @@ import PropTypes from "prop-types";
 import "./DeckComposition.css";
 
 DeckComposition.propTypes = {
-  aceCount: PropTypes.number.isRequired,
-  twoCount: PropTypes.number.isRequired,
-  threeCount: PropTypes.number.isRequired,
-  fourCount: PropTypes.number.isRequired,
-  fiveCount: PropTypes.number.isRequired,
-  sixCount: PropTypes.number.isRequired,
-  sevenCount: PropTypes.number.isRequired,
-  eightCount: PropTypes.number.isRequired,
-  nineCount: PropTypes.number.isRequired,
-  tenCount: PropTypes.number.isRequired,
+  deckComposition: PropTypes.object.isRequired,
 };
 
-function DeckComposition({
-  aceCount,
-  twoCount,
-  threeCount,
-  fourCount,
-  fiveCount,
-  sixCount,
-  sevenCount,
-  eightCount,
-  nineCount,
-  tenCount,
-}) {
+function DeckComposition({ deckComposition }) {
   return (
     <>
       <h2>Deck composition</h2>
       <div className="deck-composition">
-        <label>Ace: {aceCount}</label>
+        <label>Ace: {deckComposition[1]}</label>
         <br />
-        <label>2: {twoCount}</label>
+        <label>2: {deckComposition[2]}</label>
         <br />
-        <label>3: {threeCount}</label>
+        <label>3: {deckComposition[3]}</label>
         <br />
-        <label>4: {fourCount}</label>
+        <label>4: {deckComposition[4]}</label>
         <br />
-        <label>5: {fiveCount}</label>
+        <label>5: {deckComposition[5]}</label>
         <br />
-        <label>6: {sixCount}</label>
+        <label>6: {deckComposition[6]}</label>
         <br />
-        <label>7: {sevenCount}</label>
+        <label>7: {deckComposition[7]}</label>
         <br />
-        <label>8: {eightCount}</label>
+        <label>8: {deckComposition[8]}</label>
         <br />
-        <label>9: {nineCount}</label>
+        <label>9: {deckComposition[9]}</label>
         <br />
-        <label>10: {tenCount}</label>
+        <label>10: {deckComposition[0]}</label>
       </div>
     </>
   );

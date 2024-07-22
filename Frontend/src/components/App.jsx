@@ -16,16 +16,18 @@ function App() {
   const [numDecks, setNumDecks] = useState(8);
 
   // Deck composition state
-  const [aceCount, setAceCount] = useState(16);
-  const [twoCount, setTwoCount] = useState(16);
-  const [threeCount, setThreeCount] = useState(16);
-  const [fourCount, setFourCount] = useState(16);
-  const [fiveCount, setFiveCount] = useState(16);
-  const [sixCount, setSixCount] = useState(16);
-  const [sevenCount, setSevenCount] = useState(16);
-  const [eightCount, setEightCount] = useState(16);
-  const [nineCount, setNineCount] = useState(16);
-  const [tenCount, setTenCount] = useState(64);
+  const [deckComposition, setDeckComposition] = useState({
+    1: 32,
+    2: 32,
+    3: 32,
+    4: 32,
+    5: 32,
+    6: 32,
+    7: 32,
+    8: 32,
+    9: 32,
+    0: 128,
+  });
 
   // Strategy tables state
   const [hardTable, setHardTable] = useState({});
@@ -40,41 +42,41 @@ function App() {
 
   // Reset deck composition when the number of decks changes
   useEffect(() => {
-    setAceCount(4 * numDecks);
-    setTwoCount(4 * numDecks);
-    setThreeCount(4 * numDecks);
-    setFourCount(4 * numDecks);
-    setFiveCount(4 * numDecks);
-    setSixCount(4 * numDecks);
-    setSevenCount(4 * numDecks);
-    setEightCount(4 * numDecks);
-    setNineCount(4 * numDecks);
-    setTenCount(16 * numDecks);
+    setDeckComposition({
+      1: 4 * numDecks,
+      2: 4 * numDecks,
+      3: 4 * numDecks,
+      4: 4 * numDecks,
+      5: 4 * numDecks,
+      6: 4 * numDecks,
+      7: 4 * numDecks,
+      8: 4 * numDecks,
+      9: 4 * numDecks,
+      0: 16 * numDecks,
+    });
     setCardsDealt([]);
   }, [numDecks]);
 
   // Add event listener to decrement card count when key is pressed
   useEffect(() => {
-    // Mapping of key presses to card information
-    const keyToCardMapping = {
-      1: { setter: setAceCount, label: "A", count: aceCount },
-      2: { setter: setTwoCount, label: "2", count: twoCount },
-      3: { setter: setThreeCount, label: "3", count: threeCount },
-      4: { setter: setFourCount, label: "4", count: fourCount },
-      5: { setter: setFiveCount, label: "5", count: fiveCount },
-      6: { setter: setSixCount, label: "6", count: sixCount },
-      7: { setter: setSevenCount, label: "7", count: sevenCount },
-      8: { setter: setEightCount, label: "8", count: eightCount },
-      9: { setter: setNineCount, label: "9", count: nineCount },
-      0: { setter: setTenCount, label: "10", count: tenCount },
-    };
-
     const handleKeyPress = (event) => {
-      const cardInfo = keyToCardMapping[event.key];
-      if (cardInfo && cardInfo.count > 0) {
-        // Decrement the count and add the card to the dealt list
-        cardInfo.setter((prevCount) => Math.max(prevCount - 1, 0));
-        setCardsDealt((prevCards) => [cardInfo.label, ...prevCards]);
+      let card = Number(event.key);
+      if (!isNaN(card) && deckComposition[card] > 0) {
+        // Update the deck composition by decrementing the count of the dealt card
+        setDeckComposition((prevComposition) => ({
+          ...prevComposition,
+          [card]: Math.max(prevComposition[card] - 1, 0),
+        }));
+
+        // Add the card to the dealt list
+        setCardsDealt((prevCards) => {
+          if (card === 0) {
+            return [10, ...prevCards];
+          } else if (card === 1) {
+            return ["A", ...prevCards];
+          }
+          return [card, ...prevCards];
+        });
       }
     };
 
@@ -85,18 +87,7 @@ function App() {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [
-    aceCount,
-    eightCount,
-    fiveCount,
-    fourCount,
-    nineCount,
-    sevenCount,
-    sixCount,
-    tenCount,
-    threeCount,
-    twoCount,
-  ]);
+  }, [deckComposition]); // Ensure effect runs when deckComposition changes
 
   // When any card count changes, get strategy tables from the server
   useEffect(() => {
@@ -112,16 +103,16 @@ function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           deckComposition: {
-            A: aceCount,
-            2: twoCount,
-            3: threeCount,
-            4: fourCount,
-            5: fiveCount,
-            6: sixCount,
-            7: sevenCount,
-            8: eightCount,
-            9: nineCount,
-            10: tenCount,
+            A: deckComposition[1],
+            2: deckComposition[2],
+            3: deckComposition[3],
+            4: deckComposition[4],
+            5: deckComposition[5],
+            6: deckComposition[6],
+            7: deckComposition[7],
+            8: deckComposition[8],
+            9: deckComposition[9],
+            10: deckComposition[0],
           },
           standsOnSoft17: true,
           bankroll: 10000, // TODO: Implement bankroll
@@ -151,19 +142,7 @@ function App() {
       }
     }
     fetchStrategy();
-  }, [
-    aceCount,
-    twoCount,
-    threeCount,
-    fourCount,
-    fiveCount,
-    sixCount,
-    sevenCount,
-    eightCount,
-    nineCount,
-    tenCount,
-    minBetSize,
-  ]);
+  }, [deckComposition, minBetSize]);
 
   return (
     <>
@@ -178,28 +157,14 @@ function App() {
       />
       <div className="flex-container">
         <div className="left-column">
-          <DeckComposition
-            aceCount={aceCount}
-            twoCount={twoCount}
-            threeCount={threeCount}
-            fourCount={fourCount}
-            fiveCount={fiveCount}
-            sixCount={sixCount}
-            sevenCount={sevenCount}
-            eightCount={eightCount}
-            nineCount={nineCount}
-            tenCount={tenCount}
-          />
-
+          <DeckComposition deckComposition={deckComposition} />
           <BetSize betSize={betSize} />
-
           <StrategyTables
             hardTable={hardTable}
             softTable={softTable}
             splitTable={splitTable}
           />
         </div>
-
         <div className="right-column">
           <CardTracker cardsDealt={cardsDealt} />
         </div>
