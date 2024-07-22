@@ -39,67 +39,35 @@ function App() {
 
   // Add event listener to decrement card count when key is pressed
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      // Ignore key presses that are not numbers
-      if (isNaN(Number(event.key))) return;
+    // Mapping of key presses to card information
+    const keyToCardMapping = {
+      1: { setter: setAceCount, label: "A", count: aceCount },
+      2: { setter: setTwoCount, label: "2", count: twoCount },
+      3: { setter: setThreeCount, label: "3", count: threeCount },
+      4: { setter: setFourCount, label: "4", count: fourCount },
+      5: { setter: setFiveCount, label: "5", count: fiveCount },
+      6: { setter: setSixCount, label: "6", count: sixCount },
+      7: { setter: setSevenCount, label: "7", count: sevenCount },
+      8: { setter: setEightCount, label: "8", count: eightCount },
+      9: { setter: setNineCount, label: "9", count: nineCount },
+      0: { setter: setTenCount, label: "10", count: tenCount },
+    };
 
-      // Decrement card count based on key pressed
-      if (event.key === "1" && aceCount > 0) {
-        setAceCount((prevCount) => prevCount - 1);
-        setCardsDealt((prevCards) => ["A", ...prevCards]);
-      }
-      if (event.key === "2") {
-        setTwoCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (twoCount === 0) return;
-        setCardsDealt((prevCards) => ["2", ...prevCards]);
-      }
-      if (event.key === "3") {
-        setThreeCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (threeCount === 0) return;
-        setCardsDealt((prevCards) => ["3", ...prevCards]);
-      }
-      if (event.key === "4") {
-        setFourCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (fourCount === 0) return;
-        setCardsDealt((prevCards) => ["4", ...prevCards]);
-      }
-      if (event.key === "5") {
-        setFiveCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (fiveCount === 0) return;
-        setCardsDealt((prevCards) => ["5", ...prevCards]);
-      }
-      if (event.key === "6") {
-        setSixCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (sixCount === 0) return;
-        setCardsDealt((prevCards) => ["6", ...prevCards]);
-      }
-      if (event.key === "7") {
-        setSevenCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (sevenCount === 0) return;
-        setCardsDealt((prevCards) => ["7", ...prevCards]);
-      }
-      if (event.key === "8") {
-        setEightCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (eightCount === 0) return;
-        setCardsDealt((prevCards) => ["8", ...prevCards]);
-      }
-      if (event.key === "9") {
-        setNineCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (nineCount === 0) return;
-        setCardsDealt((prevCards) => ["9", ...prevCards]);
-      }
-      if (event.key === "0") {
-        setTenCount((prevCount) => Math.max(prevCount - 1, 0));
-        if (tenCount === 0) return;
-        setCardsDealt((prevCards) => ["10", ...prevCards]);
+    const handleKeyPress = (event) => {
+      const cardInfo = keyToCardMapping[event.key];
+      if (cardInfo && cardInfo.count > 0) {
+        // Decrement the count and add the card to the dealt list
+        cardInfo.setter((prevCount) => Math.max(prevCount - 1, 0));
+        setCardsDealt((prevCards) => [cardInfo.label, ...prevCards]);
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    // Add event listener when component mounts
+    window.addEventListener("keydown", handleKeyPress);
 
-    // Cleanup function to remove the event listener when the component unmounts
+    // Cleanup event listener when component unmounts
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [
     aceCount,
