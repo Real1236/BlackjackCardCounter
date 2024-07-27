@@ -17,7 +17,9 @@ class StrategyController(private val strategyService: StrategyService) {
             request.deckComposition,
             request.standsOnSoft17,
             request.bankroll,
-            request.minBetSize
+            request.minBetSize,
+            request.minBetIncrement,
+            request.betSpread
         )
     }
 

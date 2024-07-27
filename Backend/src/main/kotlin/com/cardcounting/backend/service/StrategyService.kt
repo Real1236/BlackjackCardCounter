@@ -6,9 +6,9 @@ import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.apache.poi.ss.util.CellAddress
 import org.springframework.stereotype.Service
-
-import java.io.FileInputStream
 import java.io.InputStream
+import kotlin.math.floor
+import kotlin.math.max
 import kotlin.reflect.full.memberProperties
 
 @Service
@@ -17,14 +17,16 @@ class StrategyService {
         deckComposition: DeckComposition,
         standsOnSoft17: Boolean,
         bankroll: Int,
-        minBetSize: Int
+        minBetSize: Int,
+        minBetIncrement: Int,
+        betSpread: Int
     ): StrategyResponse {
         val fileInputStream = getFileAsInputStream(standsOnSoft17)
         val workbook = WorkbookFactory.create(fileInputStream)
         updateDeckComposition(workbook, deckComposition)
         workbook.creationHelper.createFormulaEvaluator().evaluateAll()
         val (hardTable, softTable, splitTable) = getStrategyTables(workbook)
-        val betSizeRounded = getBetSize(workbook, minBetSize)
+        val betSizeRounded = getBetSize(workbook, minBetSize, betSpread, minBetIncrement)
 
         return StrategyResponse(
             hardTable = hardTable,
@@ -98,13 +100,18 @@ class StrategyService {
         return table
     }
 
-    private fun getBetSize(workbook: Workbook, minBetSize: Int): Int {
+    private fun getBetSize(workbook: Workbook, minBetSize: Int, betSpread: Int, minBetIncrement: Int): Double {
         val evSheet = workbook.getSheet("ev")
         val playerEdge = evSheet.getRow(44).getCell(1).numericCellValue
-        val betMultiple = 1000 * playerEdge + 1
-        val betSize = betMultiple * minBetSize
-        val betSizeRounded = maxOf((betSize / minBetSize).toInt() * minBetSize, minBetSize)
+        val trueCount: Double = convertPlayerEdgeToTrueCount(playerEdge)
+        val bettingUnits: Double = (betSpread - 1).toDouble() / 5 * (trueCount - 1) + 1
+        val betSize: Double = bettingUnits * minBetSize
+        val betSizeRounded: Double = max(floor(betSize / minBetIncrement) * minBetIncrement, minBetSize.toDouble())
         return betSizeRounded
+    }
+
+    private fun convertPlayerEdgeToTrueCount(playerEdge: Double): Double {
+        return (133.71 * playerEdge + 0.7228)
     }
 
     private fun getEvFromExcel(workbook: Workbook): Double {
