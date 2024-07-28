@@ -5,6 +5,6 @@ data class StrategyRequest(
     val standsOnSoft17: Boolean,
     val bankroll: Int,
     val minBetSize: Int,
-    val minBetIncrement: Int,
+    val minBetIncrement: Double,
     val betSpread: Int
 )

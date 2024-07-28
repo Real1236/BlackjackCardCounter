@@ -18,7 +18,7 @@ class StrategyService {
         standsOnSoft17: Boolean,
         bankroll: Int,
         minBetSize: Int,
-        minBetIncrement: Int,
+        minBetIncrement: Double,
         betSpread: Int
     ): StrategyResponse {
         val fileInputStream = getFileAsInputStream(standsOnSoft17)
@@ -100,18 +100,21 @@ class StrategyService {
         return table
     }
 
-    private fun getBetSize(workbook: Workbook, minBetSize: Int, betSpread: Int, minBetIncrement: Int): Double {
+    private fun getBetSize(workbook: Workbook, minBetSize: Int, betSpread: Int, minBetIncrement: Double): Double {
         val evSheet = workbook.getSheet("ev")
         val playerEdge = evSheet.getRow(44).getCell(1).numericCellValue
         val trueCount: Double = convertPlayerEdgeToTrueCount(playerEdge)
         val bettingUnits: Double = (betSpread - 1).toDouble() / 5 * (trueCount - 1) + 1
         val betSize: Double = bettingUnits * minBetSize
-        val betSizeRounded: Double = max(floor(betSize / minBetIncrement) * minBetIncrement, minBetSize.toDouble())
+        val betSizeRounded: Double = max(
+            if (minBetIncrement != 0.0) floor(betSize / minBetIncrement) * minBetIncrement else betSize,
+            minBetSize.toDouble()
+        )
         return betSizeRounded
     }
 
     private fun convertPlayerEdgeToTrueCount(playerEdge: Double): Double {
-        return (133.71 * playerEdge + 0.7228)
+        return 133.71 * playerEdge + 0.7228
     }
 
     private fun getEvFromExcel(workbook: Workbook): Double {
