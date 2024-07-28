@@ -53,7 +53,7 @@ function Settings({
             type="number"
             value={minBetIncrement}
             onChange={(e) =>
-              setMinBetIncrement(Math.max(Number(e.target.value), 1))
+              setMinBetIncrement(Math.max(Number(e.target.value), 0))
             }
           />
         </label>
