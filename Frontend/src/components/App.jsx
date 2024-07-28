@@ -13,6 +13,8 @@ function App() {
   // Settings state
   const [dealerStandsOn17, setDealerStandsOn17] = useState(true);
   const [minBetSize, setMinBetSize] = useState(5);
+  const [minBetIncrement, setMinBetIncrement] = useState(1);
+  const [betSpread, setBetSpread] = useState(12);
   const [numDecks, setNumDecks] = useState(8);
 
   // Deck composition state
@@ -116,6 +118,8 @@ function App() {
           standsOnSoft17: true,
           bankroll: 10000, // TODO: Implement bankroll
           minBetSize: minBetSize,
+          minBetIncrement: minBetIncrement,
+          betSpread: betSpread,
         }),
         signal,
       };
@@ -141,7 +145,7 @@ function App() {
       }
     }
     fetchStrategy();
-  }, [deckComposition, minBetSize]);
+  }, [deckComposition, minBetSize, minBetIncrement, betSpread]);
 
   // Example useEffect to add keydown listeners for undo/redo
   useEffect(() => {
@@ -191,6 +195,10 @@ function App() {
         setDealerStandsOn17={setDealerStandsOn17}
         minBetSize={minBetSize}
         setMinBetSize={setMinBetSize}
+        minBetIncrement={minBetIncrement}
+        setMinBetIncrement={setMinBetIncrement}
+        betSpread={betSpread}
+        setBetSpread={setBetSpread}
         numDecks={numDecks}
         setNumDecks={setNumDecks}
       />

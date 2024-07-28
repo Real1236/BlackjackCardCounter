@@ -5,6 +5,10 @@ Settings.propTypes = {
   setDealerStandsOn17: PropTypes.func.isRequired,
   minBetSize: PropTypes.number.isRequired,
   setMinBetSize: PropTypes.func.isRequired,
+  minBetIncrement: PropTypes.number.isRequired,
+  setMinBetIncrement: PropTypes.func.isRequired,
+  betSpread: PropTypes.number.isRequired,
+  setBetSpread: PropTypes.func.isRequired,
   numDecks: PropTypes.number.isRequired,
   setNumDecks: PropTypes.func.isRequired,
 };
@@ -14,6 +18,10 @@ function Settings({
   setDealerStandsOn17,
   minBetSize,
   setMinBetSize,
+  minBetIncrement,
+  setMinBetIncrement,
+  betSpread,
+  setBetSpread,
   numDecks,
   setNumDecks,
 }) {
@@ -36,6 +44,26 @@ function Settings({
             type="number"
             value={minBetSize}
             onChange={(e) => setMinBetSize(Math.max(Number(e.target.value), 0))}
+          />
+        </label>
+        <br />
+        <label>
+          Minimum bet increment:
+          <input
+            type="number"
+            value={minBetIncrement}
+            onChange={(e) =>
+              setMinBetIncrement(Math.max(Number(e.target.value), 1))
+            }
+          />
+        </label>
+        <br />
+        <label>
+          Bet spread:
+          <input
+            type="number"
+            value={betSpread}
+            onChange={(e) => setBetSpread(Math.max(Number(e.target.value), 1))}
           />
         </label>
         <br />
